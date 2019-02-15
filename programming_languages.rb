@@ -1,22 +1,21 @@
-require "pry"
-
-def reformat_languages(languages)
-new_hash = {}
-  languages.each do |key, value|
-    value.each do |language, info|
-      new_hash[language] = info
-      if new_hash[language][:style].empty?
-        new_hash[language][:style] = []
+def reformat_languages(language_hash)
+  new_hash = {}
+  language_hash.each do |language_cat, languages|
+    languages.each do |language, attributes|
+      attributes.each do |attribute, att_value|
+        if language == :javascript
+          new_hash[language] = {
+            :type => att_value,
+            :style => [:oo, :functional]
+          }
+        else
+          new_hash[language] = {
+             :type => att_value,
+             :style => [language_cat]
+          }
+        end
       end
-      new_hash[language][:style] << key
-#binding.pry
-
-
-
     end
-
-
   end
-  #binding.pry
-new_hash
-end
+  return new_hash
+end	end
